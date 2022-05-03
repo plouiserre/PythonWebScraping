@@ -10,7 +10,7 @@ class PageManagerTest(unittest.TestCase):
         url = "http://www.jeuxvideo.com"
         pageManager = self.init_pageManager_unittest(html, url)
         
-        pageManager.SearchLinks()
+        pageManager.SearchLinks(url)
 
         self.assertEqual(pageManager.Url, url)
         self.assertEqual(pageManager.ContentPage, html)
@@ -21,7 +21,7 @@ class PageManagerTest(unittest.TestCase):
         url = "https://www.jeuxvideo.com"
         pageManager = self.init_pageManager_unittest(html, url)
         
-        pageManager.SearchLinks()
+        pageManager.SearchLinks(url)
 
         firstLinks = "https://www.jeuxvideo.com/test/1566617/motogp-2022-le-jeu-video-de-moto-accelere-mais-pas-a-fond.htm"
         secondLinks = "https://www.jeuxvideo.com/test/1564807/mlb-the-show-22-le-jeu-video-de-baseball-de-sony-dispo-sur-xbox-toujours-aussi-solide.htm"
@@ -35,18 +35,18 @@ class PageManagerTest(unittest.TestCase):
         url = "https://www.jeuxvideo.com"
         pageManager = self.init_pageManager_unittest(html, url)
         
-        pageManager.SearchLinks()
+        pageManager.SearchLinks(url)
 
         firstLinks = "https://www.jeuxvideo.com/test/1566617/motogp-2022-le-jeu-video-de-moto-accelere-mais-pas-a-fond.htm"
         self.assertEqual(len(pageManager.Links), 1)
         self.assertEqual(pageManager.Links[0], firstLinks)
         
 
-    def init_pageManager_unittest(self, html, url) :
+    def init_pageManager_unittest(self, html, baseUrl) :
         mockHtml =  type('',(object,),{"text":html })() 
         helper = RequestsHelper()
         helper.Get = mock.MagicMock(return_value = mockHtml)
-        pageManager = PageManager(url, helper)
+        pageManager = PageManager(helper, baseUrl)
         return pageManager
         
 
