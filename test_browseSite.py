@@ -1,7 +1,7 @@
 import unittest
 import mock
 from mock import patch
-from BrowseSite import PageManager
+from PageManager import PageManager
 
 from BrowseSite import BrowseSite
 

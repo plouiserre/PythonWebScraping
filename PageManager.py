@@ -27,14 +27,21 @@ class PageManager :
     #soucis de référence pour code 35 36
     def ValidLink(self, link) :
         isValidLink = True
-        forbidden_extension = [".png", ".json", ".css", ".js"]
+        forbidden_extension = [".png", ".json", ".css", ".js",'@']
         for ext in forbidden_extension : 
             if ext in link :
                 isValidLink = False
                 break
+        if link == '' or link == ' ' : #TODO add unit test
+            isValidLink = False
         if isValidLink and "https://" in link :
             if (self.Url in link) == False :
                 isValidLink = False
         if isValidLink and (self.BaseUrl in link) == False : 
-                link = self.BaseUrl + link
+                baseUrlLength = len(self.BaseUrl)
+                if link[0] == "/" and self.BaseUrl[baseUrlLength - 1] == "/" :
+                    baseUrl = self.BaseUrl[: baseUrlLength - 1]
+                    link = baseUrl + link
+                else :
+                    link = self.BaseUrl + link
         return isValidLink, link
