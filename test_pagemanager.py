@@ -31,7 +31,7 @@ class PageManagerTest(unittest.TestCase):
 
 
     def test_validLinks (self) :
-        html = "<a class=\"stretched-link card__link\" href=\"/test/1566617/motogp-2022-le-jeu-video-de-moto-accelere-mais-pas-a-fond.htm\">MotoGP 2022 : le jeu vidéo de moto accélère, mais pas à fond !</a> <a class=\"stretched-link card__link\" href=\"https://sdk.privacy-center.org/\">Link1</a><a class=\"stretched-link card__link\" href=\"/favicon.png\">Link2</a><a class=\"stretched-link card__link\" href=\"/manifest.json\">Link3</a><a class=\"stretched-link card__link\" href=\"https://static.jvc.gg/22.6.1/css/skin-common.css\">Link4</a><a class=\"stretched-link card__link\" href=\"https://static.jvc.gg/22.6.1/js/hp.js\">Link5</a></h3>"
+        html = "<a class=\"stretched-link card__link\" href=\"/test/1566617/motogp-2022-le-jeu-video-de-moto-accelere-mais-pas-a-fond.htm\">MotoGP 2022 : le jeu vidéo de moto accélère, mais pas à fond !</a> <a class=\"stretched-link card__link\" href=\"https://sdk.privacy-center.org/\">Link1</a><a class=\"stretched-link card__link\" href=\"/favicon.png\">Link2</a><a class=\"stretched-link card__link\" href=\"/manifest.json\">Link3</a><a class=\"stretched-link card__link\" href=\"https://static.jvc.gg/22.6.1/css/skin-common.css\">Link4</a><a class=\"stretched-link card__link\" href=\"https://static.jvc.gg/22.6.1/js/hp.js\">Link5</a><a class=\"stretched-link card__link\" href=\"https://www.jeuxvideo.com/mailto:work@code-garage.fr \">Link6</a></h3>"
         url = "https://www.jeuxvideo.com"
         pageManager = self.init_pageManager_unittest(html, url)
         
@@ -40,6 +40,28 @@ class PageManagerTest(unittest.TestCase):
         firstLinks = "https://www.jeuxvideo.com/test/1566617/motogp-2022-le-jeu-video-de-moto-accelere-mais-pas-a-fond.htm"
         self.assertEqual(len(pageManager.Links), 1)
         self.assertEqual(pageManager.Links[0], firstLinks)
+
+    
+    def test_doubleslashs (self) :
+        html = "<a class=\"stretched-link card__link\" href=\"/test/1566617/motogp-2022-le-jeu-video-de-moto-accelere-mais-pas-a-fond.htm\">MotoGP 2022 : le jeu vidéo de moto accélère, mais pas à fond !</a>"
+        url = "https://www.jeuxvideo.com/"
+        pageManager = self.init_pageManager_unittest(html, url)
+        
+        pageManager.SearchLinks(url)
+
+        firstLinks = "https://www.jeuxvideo.com/test/1566617/motogp-2022-le-jeu-video-de-moto-accelere-mais-pas-a-fond.htm"
+        self.assertEqual(len(pageManager.Links), 1)
+        self.assertEqual(pageManager.Links[0], firstLinks)
+
+
+    def test_emptyLinks (self) :
+        html = "<a class=\"stretched-link card__link\" href=\""">MotoGP 2022 : le jeu vidéo de moto accélère, mais pas à fond !</a>"
+        url = "https://www.jeuxvideo.com/"
+        pageManager = self.init_pageManager_unittest(html, url)
+        
+        pageManager.SearchLinks(url)
+
+        self.assertEqual(len(pageManager.Links), 0)
         
 
     def init_pageManager_unittest(self, html, baseUrl) :
