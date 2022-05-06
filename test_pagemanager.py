@@ -55,7 +55,17 @@ class PageManagerTest(unittest.TestCase):
 
 
     def test_emptyLinks (self) :
-        html = "<a class=\"stretched-link card__link\" href=\""">MotoGP 2022 : le jeu vidéo de moto accélère, mais pas à fond !</a>"
+        html = "<a class=\"stretched-link card__link\" href="">MotoGP 2022 : le jeu vidéo de moto accélère, mais pas à fond !</a> <a class=\"stretched-link card__link\" href=\" \">MLB The Show 22 : Le jeu vidéo de Baseball de Sony dispo sur Xbox toujours aussi solide</a>"
+        url = "https://www.jeuxvideo.com/"
+        pageManager = self.init_pageManager_unittest(html, url)
+        
+        pageManager.SearchLinks(url)
+
+        self.assertEqual(len(pageManager.Links), 0)
+
+
+    def test_other_domain (self) :
+        html = "<a class=\"stretched-link card__link\" href=\"http://web2day.co/\">MotoGP 2022 : le jeu vidéo de moto accélère, mais pas à fond !</a>"
         url = "https://www.jeuxvideo.com/"
         pageManager = self.init_pageManager_unittest(html, url)
         

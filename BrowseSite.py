@@ -24,6 +24,9 @@ class BrowseSite :
             duration = timer.GetDurationBrowsing()
             self.LogTime(duration, self.AllLinks[i])
             i += 1
+        self.Log.Log_Debug_Level("%d pages analyzed" % len(self.AllLinks))
+
+
 
     
     def LogTime(self, duration, link) : 
