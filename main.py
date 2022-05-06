@@ -11,8 +11,8 @@ time = Timer()
         
 #pour comprendre le bug analyser la page https://www.jeuxvideo.com/forums/0-3019601-0-1-0-1-0-tiny-tina-s-wonderlands.htm 
 #baseUrl = "https://www.jeuxvideo.com"
-#baseUrl = "https://www.excalibur-comics.fr/"
-baseUrl = "https://code-garage.fr/"
+#baseUrl = "https://www.excalibur-comics.fr"
+baseUrl = "https://code-garage.fr"
 helper = RequestsHelper()
 pgManager = PageManager(helper, baseUrl)
 browseSite = BrowseSite(baseUrl, pgManager, log)
